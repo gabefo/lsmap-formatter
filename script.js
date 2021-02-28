@@ -2,7 +2,7 @@
     "use-strict";
 
     var regex = /\w+(?:#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
-    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P22", "P24", "P32", "P38", "P41", "P42", "P43", "P44"];
+    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P22", "P23", "P24", "P32", "P38", "P41", "P42", "P43", "P44", "P66"];
     var categoryIcons = {
         P0: "http://i.imgur.com/AjcGgyx.png",
         P1: "http://i.imgur.com/dnuppaW.png",
@@ -21,13 +21,15 @@
         P18: "http://i.imgur.com/8bEFPBE.png",
         P19: "http://img.atelier801.com/8124f166.png",
         P22: "http://i.imgur.com/Lxvjj1M.png",
+        P23: "http://i.imgur.com/KQmIe6z.png",
         P24: "http://img.atelier801.com/80a4f166.png",
         P32: "http://i.imgur.com/DoACCNh.png",
         P38: "http://i.imgur.com/pUB90w0.png",
         P41: "http://i.imgur.com/GmbpOc6.png",
         P42: "http://i.imgur.com/RV32jmm.png",
         P43: "http://i.imgur.com/BLabBxr.png",
-        P44: "http://i.imgur.com/BLabBxr.png"
+        P44: "http://i.imgur.com/BLabBxr.png",
+        P66: "http://i.imgur.com/GmbpOc6.png"
     };
     var categoryNames = {
         P0: "Normal",
@@ -47,13 +49,15 @@
         P18: "Defilante",
         P19: "Music",
         P22: "Tribe House",
+        P23: "Bootcamp Test",
         P24: "Dual Shaman Survivor",
         P32: "Dual Shaman Test",
         P38: "Racing Test",
         P41: "Module",
         P42: "No Shaman Test",
         P43: "High Deleted",
-        P44: "Deleted"
+        P44: "Deleted",
+        P66: "Themed"
     };
     var displayCategory = {
         P0: false,
@@ -73,13 +77,15 @@
         P18: true,
         P19: false,
         P22: false,
+        P23: false,
         P24: true,
         P32: false,
         P38: false,
         P41: false,
         P42: false,
         P43: false,
-        P44: false
+        P44: false,
+        P66: false
     };
     var showCategoryIcon = true;
     var showCategoryName = false;
