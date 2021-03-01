@@ -2,7 +2,7 @@
     "use-strict";
 
     var regex = /\w+(?:#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
-    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P22", "P23", "P24", "P32", "P38", "P41", "P42", "P43", "P44", "P66"];
+    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P22", "P23", "P24", "P32", "P34", "P38", "P41", "P42", "P43", "P44", "P66"];
     var categoryIcons = {
         P0: "http://i.imgur.com/AjcGgyx.png",
         P1: "http://i.imgur.com/dnuppaW.png",
@@ -24,6 +24,7 @@
         P23: "http://i.imgur.com/KQmIe6z.png",
         P24: "http://img.atelier801.com/80a4f166.png",
         P32: "http://i.imgur.com/DoACCNh.png",
+        P34: "http://img.atelier801.com/80a4f166.png",
         P38: "http://i.imgur.com/pUB90w0.png",
         P41: "http://i.imgur.com/GmbpOc6.png",
         P42: "http://i.imgur.com/RV32jmm.png",
@@ -52,6 +53,7 @@
         P23: "Bootcamp Test",
         P24: "Dual Shaman Survivor",
         P32: "Dual Shaman Test",
+        P34: "Dual Shaman Survivor Test",
         P38: "Racing Test",
         P41: "Module",
         P42: "No Shaman Test",
@@ -80,6 +82,7 @@
         P23: false,
         P24: true,
         P32: false,
+        P34: false,
         P38: false,
         P41: false,
         P42: false,
