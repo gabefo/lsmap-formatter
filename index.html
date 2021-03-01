@@ -4,32 +4,27 @@
         <script src="script.js"></script>
     </head>
     <body>
-        <div class="wrapper">
-            <div class="panel left">
-                <span>Paste your lsmap here</span>
-                <textarea id="source"></textarea>
-                <div id="options">
-                    <div id="general">
-                        <label>
-                            <input type="checkbox" checked>Show category icon
-                        </label>
-                        <label>
-                            <input type="checkbox">Show category name
-                        </label>
-                        <label>
-                            <input type="checkbox" checked>Show map count
-                        </label>
-                    </div>
-                    <div id="categories"></div>
-                </div>
+        <div id="wrapper">
+            <h1>Lsmap to BBCode Formatter</h1>
+            <div id="row">
+                <textarea id="source" placeholder="Paste your lsmap here..."></textarea>
+                <textarea id="output" placeholder="Result..."></textarea>
             </div>
-            <div class="panel center">
-                <button id="button">CONVERT</button>
+            <button id="format-button">Format</button>
+            <h4>Options:</h4>
+            <div id="options">
+                <label>
+                    <input type="checkbox" checked>Show category icon
+                </label>
+                <label>
+                    <input type="checkbox">Show category name
+                </label>
+                <label>
+                    <input type="checkbox" checked>Show map count
+                </label>
             </div>
-            <div class="panel right">
-                <span>Result</span>
-                <textarea id="output"></textarea>
-            </div>
+            <h4>Displaying Categories:</h4>
+            <div id="categories"></div>
         </div>
     </body>
 </html>
