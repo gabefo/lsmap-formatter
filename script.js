@@ -1,70 +1,153 @@
 (function () {
     "use-strict";
 
-    var regex = /\w+(?:#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
-    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P20", "P21", "P22", "P23", "P24", "P32", "P34", "P38", "P41", "P42", "P43", "P44", "P66"];
-    var categoryIcons = {
-        P0: "http://i.imgur.com/AjcGgyx.png",
-        P1: "http://i.imgur.com/dnuppaW.png",
-        P2: "http://i.imgur.com/0xHDJfs.png",
-        P3: "http://i.imgur.com/KQmIe6z.png",
-        P4: "http://i.imgur.com/W2DuMvz.png",
-        P5: "http://i.imgur.com/JefkO6b.png",
-        P6: "http://i.imgur.com/EyQAQ10.png",
-        P7: "http://i.imgur.com/RV32jmm.png",
-        P8: "http://i.imgur.com/DoACCNh.png",
-        P9: "http://i.imgur.com/PYRguTf.png",
-        P10: "http://i.imgur.com/UytFMU1.png",
-        P11: "http://i.imgur.com/44zz3dC.png",
-        P13: "http://i.imgur.com/KQmIe6z.png",
-        P17: "http://i.imgur.com/ouplMc9.png",
-        P18: "http://i.imgur.com/8bEFPBE.png",
-        P19: "http://img.atelier801.com/8124f166.png",
-        P20: "http://i.imgur.com/UytFMU1.png",
-        P21: "http://i.imgur.com/44zz3dC.png",
-        P22: "http://i.imgur.com/Lxvjj1M.png",
-        P23: "http://i.imgur.com/KQmIe6z.png",
-        P24: "http://img.atelier801.com/80a4f166.png",
-        P32: "http://i.imgur.com/DoACCNh.png",
-        P34: "http://img.atelier801.com/80a4f166.png",
-        P38: "http://i.imgur.com/pUB90w0.png",
-        P41: "http://i.imgur.com/GmbpOc6.png",
-        P42: "http://i.imgur.com/RV32jmm.png",
-        P43: "http://i.imgur.com/BLabBxr.png",
-        P44: "http://i.imgur.com/BLabBxr.png",
-        P66: "http://i.imgur.com/GmbpOc6.png"
-    };
-    var categoryNames = {
-        P0: "Normal",
-        P1: "Protected",
-        P2: "Prime",
-        P3: "Bootcamp",
-        P4: "Shaman",
-        P5: "Art",
-        P6: "Mechanism",
-        P7: "No Shaman",
-        P8: "Dual Shamans",
-        P9: "Miscellaneous",
-        P10: "Survivor",
-        P11: "Vampire Survivor",
-        P13: "Bootcamp",
-        P17: "Racing",
-        P18: "Defilante",
-        P19: "Music",
-        P20: "Survivor Test",
-        P21: "Vampire Survivor Test",
-        P22: "Tribe House",
-        P23: "Bootcamp Test",
-        P24: "Dual Shaman Survivor",
-        P32: "Dual Shaman Test",
-        P34: "Dual Shaman Survivor Test",
-        P38: "Racing Test",
-        P41: "Module",
-        P42: "No Shaman Test",
-        P43: "High Deleted",
-        P44: "Deleted",
-        P66: "Themed"
-    };
+    var regex = /(\w+)(#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
+    var allCategories = [{
+        code: "P0",
+        name: "Normal",
+        color: "#ACA99F",
+        icon: "http://i.imgur.com/AjcGgyx.png"
+    }, {
+        code: "P1",
+        name: "Protected",
+        color: "#FCD46E",
+        icon: "http://i.imgur.com/dnuppaW.png"
+    }, {
+        code: "P2",
+        name: "Prime",
+        color: "#E9BA5C",
+        icon: "http://i.imgur.com/0xHDJfs.png"
+    }, {
+        code: "P3",
+        name: "Bootcamp",
+        color: "#A19A6C",
+        icon: "http://i.imgur.com/KQmIe6z.png"
+    }, {
+        code: "P4",
+        name: "Shaman",
+        color: "#95D9D6",
+        icon: "http://i.imgur.com/W2DuMvz.png"
+    }, {
+        code: "P5",
+        name: "Art",
+        color: "#D16C41",
+        icon: "http://i.imgur.com/JefkO6b.png"
+    }, {
+        code: "P6",
+        name: "Mechanism",
+        color: "#DBDBDB",
+        icon: "http://i.imgur.com/EyQAQ10.png"
+    }, {
+        code: "P7",
+        name: "No Shaman",
+        color: "#E9E9E9",
+        icon: "http://i.imgur.com/RV32jmm.png"
+    }, {
+        code: "P8",
+        name: "Dual Shamans",
+        color: "#C9C0E4",
+        icon: "http://i.imgur.com/DoACCNh.png"
+    }, {
+        code: "P9",
+        name: "Miscellaneous",
+        color: "#E9BA5C",
+        icon: "http://i.imgur.com/PYRguTf.png"
+    }, {
+        code: "P10",
+        name: "Survivor",
+        color: "#7C7C7C",
+        icon: "http://i.imgur.com/UytFMU1.png"
+    }, {
+        code: "P11",
+        name: "Vampire Survivor",
+        color: "#AC3736",
+        icon: "http://i.imgur.com/44zz3dC.png"
+    }, {
+        code: "P13",
+        name: "Bootcamp",
+        color: "#A19A6C",
+        icon: "http://i.imgur.com/KQmIe6z.png"
+    }, {
+        code: "P17",
+        name: "Racing",
+        color: "#CA8A7F",
+        icon: "http://i.imgur.com/ouplMc9.png"
+    }, {
+        code: "P18",
+        name: "Defilante",
+        color: "#84D329",
+        icon: "http://i.imgur.com/8bEFPBE.png"
+    }, {
+        code: "P19",
+        name: "Music",
+        color: "#9FAAB2",
+        icon: "http://img.atelier801.com/8124f166.png"
+    }, {
+        code: "P20",
+        name: "Survivor Test",
+        color: "#7C7C7C",
+        icon: "http://i.imgur.com/UytFMU1.png"
+    }, {
+        code: "P21",
+        name: "Vampire Survivor Test",
+        color: "#AC3736",
+        icon: "http://i.imgur.com/44zz3dC.png"
+    }, {
+        code: "P22",
+        name: "Tribe House",
+        color: "#937456",
+        icon: "http://i.imgur.com/Lxvjj1M.png"
+    }, {
+        code: "P23",
+        name: "Bootcamp Test",
+        color: "#A19A6C",
+        icon: "http://i.imgur.com/KQmIe6z.png"
+    }, {
+        code: "P24",
+        name: "Dual Shaman Survivor",
+        color: "#7C7C7C",
+        icon: "http://img.atelier801.com/80a4f166.png"
+    }, {
+        code: "P32",
+        name: "Dual Shaman Test",
+        color: "#C9C0E4",
+        icon: "http://i.imgur.com/DoACCNh.png"
+    }, {
+        code: "P34",
+        name: "Dual Shaman Survivor Test",
+        color: "#7C7C7C",
+        icon: "http://img.atelier801.com/80a4f166.png"
+    }, {
+        code: "P38",
+        name: "Racing Test",
+        color: "#CA8A7F",
+        icon: "http://i.imgur.com/pUB90w0.png"
+    }, {
+        code: "P41",
+        name: "Module",
+        color: "#009D9D",
+        icon: "http://i.imgur.com/GmbpOc6.png"
+    }, {
+        code: "P42",
+        name: "No Shaman Test",
+        color: "#E9E9E9",
+        icon: "http://i.imgur.com/RV32jmm.png"
+    }, {
+        code: "P43",
+        name: "High Deleted",
+        color: "#FA6A40",
+        icon: "http://i.imgur.com/BLabBxr.png"
+    }, {
+        code: "P44",
+        name: "Deleted",
+        color: "#FA6A40",
+        icon: "http://i.imgur.com/BLabBxr.png"
+    }, {
+        code: "P66",
+        name: "Themed",
+        color: "#009D9D",
+        icon: "http://i.imgur.com/GmbpOc6.png"
+    }];
     var displayCategory = {
         P0: false,
         P1: true,
@@ -97,9 +180,83 @@
         P66: false
     };
     var showCategoryIcon = true;
+    var showCategoryCode = true;
     var showCategoryName = false;
     var showMapCount = true;
     var maxCols = 5;
+
+    function lsmapToBBCode(text) {
+        var mapsByAuthor = {};
+        readLine(text, function (line) {
+            var match = regex.exec(line);
+            if (match === null) {
+                return;
+            }
+            var author = match[1] + (match[2] || "#0000");
+            var code = match[3];
+            var category = match[4];
+            var mapsByCategory = mapsByAuthor[author] || (mapsByAuthor[author] = {});
+            var maps = mapsByCategory[category] || (mapsByCategory[category] = []);
+            maps.push(code);
+        });
+        var bbcode = "";
+        var authors = Object.keys(mapsByAuthor);
+        for (var i = 0; i < authors.length; i++) {
+            var author = authors[i];
+            var mapsByCategory = mapsByAuthor[author];
+            bbcode += "[#" + author + "][table align=center][row]";
+            for (var j = 0, cols = 0; j < allCategories.length; j++) {
+                var category = allCategories[j];
+                var categoryCode = category.code;
+                if (displayCategory[categoryCode]) {
+                    var maps = mapsByCategory[categoryCode];
+                    if (maps) {
+                        if (cols === maxCols) {
+                            bbcode += "[/row][row]";
+                            cols = 0;
+                        }
+                        bbcode += "[cel][spoiler=";
+                        var separator = "";
+                        if (showCategoryIcon) {
+                            bbcode += "[img]" + category.icon + "[/img]";
+                            separator = " ";
+                        }
+                        bbcode += "[color=" + category.color + "][b]";
+                        if (showCategoryCode) {
+                            bbcode += separator + categoryCode;
+                            separator = " - ";
+                        }
+                        if (showCategoryName) {
+                            bbcode += separator + category.name;
+                        }
+                        if (separator !== "") {
+                            separator = " ";
+                        }
+                        if (showMapCount) {
+                            bbcode += separator + "(" + maps.length + ")";
+                        }
+                        bbcode += "[/b][/color]]\n" + maps.join("\n") + "[/spoiler][/cel]";
+                        cols++;
+                    }
+                }
+            }
+            bbcode += "[/row][/table][/#" + author + "]";
+        }
+        return bbcode;
+    };
+
+    function readFile(file) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = function (event) {
+                resolve(event.target.result);
+            };
+            reader.onerror = function (event) {
+                reject("error reading file");
+            };
+        });
+    }
 
     function readLine(text, callback) {
         var length = text.length;
@@ -115,88 +272,70 @@
         }
     }
 
-    function lsmapToBBCode(text) {
-        var mapsByCategory = {};
-        readLine(text, function (line) {
-            var match = regex.exec(line);
-            if (match === null) {
-                return;
-            }
-            var code = match[1];
-            var category = match[2];
-            if (!mapsByCategory[category]) {
-                mapsByCategory[category] = [];
-            }
-            mapsByCategory[category].push(code);
-        });
-        var bbcode = "[table align=center][row]";
-        for (var i = 0, j = 0; i < allCategories.length; i++) {
-            var category = allCategories[i];
-            if (displayCategory[category]) {
-                var maps = mapsByCategory[category];
-                if (maps) {
-                    if (j === maxCols) {
-                        bbcode += "[/row][row]";
-                        j = 0;
-                    }
-                    bbcode += "[cel][spoiler=";
-                    if (showCategoryIcon) {
-                        bbcode += "[img]" + categoryIcons[category] + "[/img]";
-                    }
-                    if (showCategoryName) {
-                        bbcode += " " + categoryNames[category];
-                    }
-                    if (showMapCount) {
-                        bbcode += " (" + maps.length + ")";
-                    }
-                    bbcode += "]";
-                    for (var k = 0; k < maps.length; k++) {
-                        bbcode += "\n" + maps[k];
-                    }
-                    bbcode += "[/spoiler][/cel]";
-                    j++;
-                }
-            }
-        }
-        bbcode += "[/row][/table]";
-        return bbcode;
-    };
-
     function checkboxChangeEventHandler(event) {
         var target = event.target;
         displayCategory[target.value] = target.checked;
     }
 
     window.addEventListener("load", function () {
-        var inputs = document.getElementsByTagName("input");
-        inputs[0].addEventListener("change", function (event) {
+        document.getElementById("show-category-icon").addEventListener("change", function (event) {
             showCategoryIcon = event.target.checked;
         });
-        inputs[1].addEventListener("change", function (event) {
+        document.getElementById("show-category-code").addEventListener("change", function (event) {
+            showCategoryCode = event.target.checked;
+        });
+        document.getElementById("show-category-name").addEventListener("change", function (event) {
             showCategoryName = event.target.checked;
         });
-        inputs[2].addEventListener("change", function (event) {
+        document.getElementById("show-map-count").addEventListener("change", function (event) {
             showMapCount = event.target.checked;
         });
         var container = document.getElementById("categories");
         for (var i = 0; i < allCategories.length; i++) {
             var category = allCategories[i];
+            var categoryCode = category.code;
             var label = document.createElement("label");
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-            checkbox.value = category;
-            checkbox.checked = displayCategory[category];
+            checkbox.value = categoryCode;
+            checkbox.checked = displayCategory[categoryCode];
             checkbox.addEventListener("change", checkboxChangeEventHandler);
             label.appendChild(checkbox);
-            var text = document.createTextNode(category + " - " + categoryNames[category]);
+            var text = document.createTextNode(categoryCode + " - " + category.name);
             label.appendChild(text);
             container.appendChild(label);
         }
         var source = document.getElementById("source");
         var output = document.getElementById("output");
-        var button = document.getElementById("format-button");
-        button.addEventListener("click", function (event) {
+
+        var fileSelector = document.getElementById("file-selector");
+
+        fileSelector.addEventListener("change", function (event) {
+            var files = event.target.files;
+            var totalFiles = files.length;
+            if (totalFiles > 0) {
+                var promises = [];
+                for (var i = 0; i < totalFiles; i++) {
+                    promises.push(readFile(files[i]));
+                }
+                Promise.all(promises).then(function (values) {
+                    source.value = values.join("\n");
+                });
+            }
+        });
+
+        var formatButton = document.getElementById("format");
+
+        formatButton.addEventListener("click", function (event) {
             output.value = lsmapToBBCode(source.value);
+        });
+
+        var copyButton = document.getElementById("copy");
+
+        copyButton.addEventListener("click", function (event) {
+            output.select()
+            output.setSelectionRange(0, output.value.length);
+            document.execCommand("copy");
         });
     });
 })();
