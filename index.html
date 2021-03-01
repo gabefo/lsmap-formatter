@@ -6,25 +6,40 @@
     <body>
         <div id="wrapper">
             <h1>Lsmap to BBCode Formatter</h1>
-            <div id="row">
-                <textarea id="source" placeholder="Paste your lsmap here..."></textarea>
-                <textarea id="output" placeholder="Result..."></textarea>
+            <div class="grid">
+                <div class="cel">
+                    <textarea id="source" placeholder="Paste your lsmap here..."></textarea>
+                    <div class="row">
+                        <input id="file-selector" type="file" accept=".txt" multiple>
+                        <label for="file-selector" class="button">Upload files</label>
+                        <div class="spacer"></div>
+                        <button id="format" class="button">Format</button>
+                    </div>
+                </div>
+                <div class="cel">
+                    <textarea id="output" placeholder="Result..."></textarea>
+                    <div class="row">
+                        <button id="copy" class="button left">Copy</button>
+                    </div>
+                </div>
             </div>
-            <button id="format-button">Format</button>
             <h4>Options:</h4>
-            <div id="options">
+            <div id="options" class="input-group">
                 <label>
-                    <input type="checkbox" checked>Show category icon
+                    <input id="show-category-icon" type="checkbox" checked>Show category icon
                 </label>
                 <label>
-                    <input type="checkbox">Show category name
+                    <input id="show-category-code" type="checkbox" checked>Show category code
                 </label>
                 <label>
-                    <input type="checkbox" checked>Show map count
+                    <input id="show-category-name" type="checkbox">Show category name
+                </label>
+                <label>
+                    <input id="show-map-count" type="checkbox" checked>Show map count
                 </label>
             </div>
             <h4>Displaying Categories:</h4>
-            <div id="categories"></div>
+            <div id="categories" class="input-group"></div>
         </div>
     </body>
 </html>
