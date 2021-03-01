@@ -2,7 +2,7 @@
     "use-strict";
 
     var regex = /\w+(?:#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
-    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P22", "P23", "P24", "P32", "P34", "P38", "P41", "P42", "P43", "P44", "P66"];
+    var allCategories = ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P13", "P17", "P18", "P19", "P20", "P21", "P22", "P23", "P24", "P32", "P34", "P38", "P41", "P42", "P43", "P44", "P66"];
     var categoryIcons = {
         P0: "http://i.imgur.com/AjcGgyx.png",
         P1: "http://i.imgur.com/dnuppaW.png",
@@ -20,6 +20,8 @@
         P17: "http://i.imgur.com/ouplMc9.png",
         P18: "http://i.imgur.com/8bEFPBE.png",
         P19: "http://img.atelier801.com/8124f166.png",
+        P20: "http://i.imgur.com/UytFMU1.png",
+        P21: "http://i.imgur.com/44zz3dC.png",
         P22: "http://i.imgur.com/Lxvjj1M.png",
         P23: "http://i.imgur.com/KQmIe6z.png",
         P24: "http://img.atelier801.com/80a4f166.png",
@@ -49,6 +51,8 @@
         P17: "Racing",
         P18: "Defilante",
         P19: "Music",
+        P20: "Survivor Test",
+        P21: "Vampire Survivor Test",
         P22: "Tribe House",
         P23: "Bootcamp Test",
         P24: "Dual Shaman Survivor",
@@ -78,6 +82,8 @@
         P17: true,
         P18: true,
         P19: false,
+        P20: false,
+        P21: false,
         P22: false,
         P23: false,
         P24: true,
