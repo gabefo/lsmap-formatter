@@ -249,10 +249,10 @@
         return new Promise(function (resolve, reject) {
             var reader = new FileReader();
             reader.readAsText(file, "UTF-8");
-            reader.onload = function (event) {
-                resolve(event.target.result);
+            reader.onload = function () {
+                resolve(this.result);
             };
-            reader.onerror = function (event) {
+            reader.onerror = function () {
                 reject("error reading file");
             };
         });
@@ -286,32 +286,32 @@
         return checkbox;
     }
 
-    function checkboxChangeEventHandler(event) {
-        var target = event.target;
-        displayCategory[target.value] = target.checked;
+    function checkboxChangeEventHandler() {
+        displayCategory[this.value] = this.checked;
     }
 
     window.addEventListener("load", function () {
-        document.getElementById("show-category-icon").addEventListener("change", function (event) {
-            showCategoryIcon = event.target.checked;
+        document.getElementById("show-category-icon").addEventListener("change", function () {
+            showCategoryIcon = this.checked;
         });
-        document.getElementById("show-category-code").addEventListener("change", function (event) {
-            showCategoryCode = event.target.checked;
+        document.getElementById("show-category-code").addEventListener("change", function () {
+            showCategoryCode = this.checked;
         });
-        document.getElementById("show-category-name").addEventListener("change", function (event) {
-            showCategoryName = event.target.checked;
+        document.getElementById("show-category-name").addEventListener("change", function () {
+            showCategoryName = this.checked;
         });
-        document.getElementById("show-map-count").addEventListener("change", function (event) {
-            showMapCount = event.target.checked;
+        document.getElementById("show-map-count").addEventListener("change", function () {
+            showMapCount = this.checked;
         });
 
         var categoryContainer = document.getElementById("categories");
         var categoryCheckboxList = [];
 
-        addCheckbox(categoryContainer, null, "All", false).addEventListener("change", function (event) {
-            var checked = event.target.checked;
+        addCheckbox(categoryContainer, null, "All", false).addEventListener("change", function () {
+            var checked = this.checked;
             for (var i = 0; i < categoryCheckboxList.length; i++) {
-                categoryCheckboxList[i].checked = checked;
+                var checkbox = categoryCheckboxList[i];
+                checkbox.checked = displayCategory[checkbox.value] = checked;
             }
         });
 
@@ -326,8 +326,8 @@
 
         var fileSelector = document.getElementById("file-selector");
 
-        fileSelector.addEventListener("change", function (event) {
-            var files = event.target.files;
+        fileSelector.addEventListener("change", function () {
+            var files = this.files;
             var totalFiles = files.length;
             if (totalFiles > 0) {
                 var promises = [];
@@ -342,13 +342,13 @@
 
         var formatButton = document.getElementById("format");
 
-        formatButton.addEventListener("click", function (event) {
+        formatButton.addEventListener("click", function () {
             output.value = lsmapToBBCode(source.value);
         });
 
         var copyButton = document.getElementById("copy");
 
-        copyButton.addEventListener("click", function (event) {
+        copyButton.addEventListener("click", function () {
             output.select()
             output.setSelectionRange(0, output.value.length);
             document.execCommand("copy");
