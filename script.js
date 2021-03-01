@@ -115,7 +115,7 @@
         }
     }
 
-    function toBBCode(text) {
+    function lsmapToBBCode(text) {
         var mapsByCategory = {};
         readLine(text, function (line) {
             var match = regex.exec(line);
@@ -194,9 +194,9 @@
         }
         var source = document.getElementById("source");
         var output = document.getElementById("output");
-        var button = document.getElementById("button");
+        var button = document.getElementById("format-button");
         button.addEventListener("click", function (event) {
-            output.value = toBBCode(source.value);
+            output.value = lsmapToBBCode(source.value);
         });
     });
 })();
