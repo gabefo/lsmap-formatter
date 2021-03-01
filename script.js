@@ -272,6 +272,20 @@
         }
     }
 
+    function addCheckbox(container, value, label, checked) {
+        var labelElement = document.createElement("label");
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = value;
+        checkbox.checked = checked;
+        checkbox.addEventListener("change", checkboxChangeEventHandler);
+        var text = document.createTextNode(label);
+        labelElement.appendChild(checkbox);
+        labelElement.appendChild(text);
+        container.appendChild(labelElement);
+        return checkbox;
+    }
+
     function checkboxChangeEventHandler(event) {
         var target = event.target;
         displayCategory[target.value] = target.checked;
@@ -290,21 +304,23 @@
         document.getElementById("show-map-count").addEventListener("change", function (event) {
             showMapCount = event.target.checked;
         });
-        var container = document.getElementById("categories");
+
+        var categoryContainer = document.getElementById("categories");
+        var categoryCheckboxList = [];
+
+        addCheckbox(categoryContainer, null, "All", false).addEventListener("change", function (event) {
+            var checked = event.target.checked;
+            for (var i = 0; i < categoryCheckboxList.length; i++) {
+                categoryCheckboxList[i].checked = checked;
+            }
+        });
+
         for (var i = 0; i < allCategories.length; i++) {
             var category = allCategories[i];
             var categoryCode = category.code;
-            var label = document.createElement("label");
-            var checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.value = categoryCode;
-            checkbox.checked = displayCategory[categoryCode];
-            checkbox.addEventListener("change", checkboxChangeEventHandler);
-            label.appendChild(checkbox);
-            var text = document.createTextNode(categoryCode + " - " + category.name);
-            label.appendChild(text);
-            container.appendChild(label);
+            categoryCheckboxList.push(addCheckbox(categoryContainer, categoryCode, categoryCode + " - " + category.name, displayCategory[categoryCode]));
         }
+
         var source = document.getElementById("source");
         var output = document.getElementById("output");
 
