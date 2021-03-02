@@ -148,7 +148,11 @@
         color: "#009D9D",
         icon: "http://i.imgur.com/GmbpOc6.png"
     }];
-    var displayCategory = {
+    var options = {
+        showCategoryIcon: true,
+        showCategoryCode: true,
+        showCategoryName: false,
+        showMapCount: true,
         P0: false,
         P1: true,
         P2: true,
@@ -179,13 +183,9 @@
         P44: false,
         P66: false
     };
-    var showCategoryIcon = true;
-    var showCategoryCode = true;
-    var showCategoryName = false;
-    var showMapCount = true;
     var maxCols = 5;
 
-    function lsmapToBBCode(text) {
+    function formatText(text) {
         var mapsByAuthor = {};
         readLine(text, function (line) {
             var match = regex.exec(line);
@@ -199,50 +199,50 @@
             var maps = mapsByCategory[category] || (mapsByCategory[category] = []);
             maps.push(code);
         });
-        var bbcode = "";
+        var result = "";
         var authors = Object.keys(mapsByAuthor);
         for (var i = 0; i < authors.length; i++) {
             var author = authors[i];
             var mapsByCategory = mapsByAuthor[author];
-            bbcode += "[#" + author + "][table align=center][row]";
+            result += "[#" + author + "][table align=center][row]";
             for (var j = 0, cols = 0; j < allCategories.length; j++) {
                 var category = allCategories[j];
                 var categoryCode = category.code;
-                if (displayCategory[categoryCode]) {
+                if (options[categoryCode]) {
                     var maps = mapsByCategory[categoryCode];
                     if (maps) {
                         if (cols === maxCols) {
-                            bbcode += "[/row][row]";
+                            result += "[/row][row]";
                             cols = 0;
                         }
-                        bbcode += "[cel][spoiler=";
+                        result += "[cel][spoiler=";
                         var separator = "";
-                        if (showCategoryIcon) {
-                            bbcode += "[img]" + category.icon + "[/img]";
+                        if (options.showCategoryIcon) {
+                            result += "[img]" + category.icon + "[/img]";
                             separator = " ";
                         }
-                        bbcode += "[color=" + category.color + "][b]";
-                        if (showCategoryCode) {
-                            bbcode += separator + categoryCode;
+                        result += "[color=" + category.color + "][b]";
+                        if (options.showCategoryCode) {
+                            result += separator + categoryCode;
                             separator = " - ";
                         }
-                        if (showCategoryName) {
-                            bbcode += separator + category.name;
+                        if (options.showCategoryName) {
+                            result += separator + category.name;
                         }
                         if (separator !== "") {
                             separator = " ";
                         }
-                        if (showMapCount) {
-                            bbcode += separator + "(" + maps.length + ")";
+                        if (options.showMapCount) {
+                            result += separator + "(" + maps.length + ")";
                         }
-                        bbcode += "[/b][/color]]\n" + maps.join("\n") + "[/spoiler][/cel]";
+                        result += "[/b][/color]]\n" + maps.join("\n") + "[/spoiler][/cel]";
                         cols++;
                     }
                 }
             }
-            bbcode += "[/row][/table][/#" + author + "]";
+            result += "[/row][/table][/#" + author + "]";
         }
-        return bbcode;
+        return result;
     };
 
     function readFile(file) {
@@ -272,61 +272,53 @@
         }
     }
 
-    function addCheckbox(container, value, label, checked) {
-        var labelElement = document.createElement("label");
+    function addCheckbox(container, labelText, value, checked) {
+        var label = document.createElement("label");
         var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.value = value;
         checkbox.checked = checked;
         checkbox.addEventListener("change", checkboxChangeEventHandler);
-        var text = document.createTextNode(label);
-        labelElement.appendChild(checkbox);
-        labelElement.appendChild(text);
-        container.appendChild(labelElement);
+        label.appendChild(checkbox);
+        var text = document.createTextNode(labelText);
+        label.appendChild(text);
+        container.appendChild(label);
         return checkbox;
     }
 
     function checkboxChangeEventHandler() {
-        displayCategory[this.value] = this.checked;
+        options[this.value] = this.checked;
     }
 
     window.addEventListener("load", function () {
-        document.getElementById("show-category-icon").addEventListener("change", function () {
-            showCategoryIcon = this.checked;
-        });
-        document.getElementById("show-category-code").addEventListener("change", function () {
-            showCategoryCode = this.checked;
-        });
-        document.getElementById("show-category-name").addEventListener("change", function () {
-            showCategoryName = this.checked;
-        });
-        document.getElementById("show-map-count").addEventListener("change", function () {
-            showMapCount = this.checked;
-        });
+        var source = document.getElementById("source");
+        var output = document.getElementById("output");
+
+        var optionsContainer = document.getElementById("options");
+        
+        addCheckbox(optionsContainer, "Show category Icon", "showCategoryIcon", options.showCategoryIcon);
+        addCheckbox(optionsContainer, "Show category code", "showCategoryCode", options.showCategoryCode);
+        addCheckbox(optionsContainer, "Show category name", "showCategoryName", options.showCategoryName);
+        addCheckbox(optionsContainer, "Show map count", "showMapCount", options.showMapCount);
 
         var categoryContainer = document.getElementById("categories");
         var categoryCheckboxList = [];
 
-        addCheckbox(categoryContainer, null, "All", false).addEventListener("change", function () {
+        addCheckbox(categoryContainer, "All", "all", false).addEventListener("change", function () {
             var checked = this.checked;
             for (var i = 0; i < categoryCheckboxList.length; i++) {
                 var checkbox = categoryCheckboxList[i];
-                checkbox.checked = displayCategory[checkbox.value] = checked;
+                checkbox.checked = options[checkbox.value] = checked;
             }
         });
 
         for (var i = 0; i < allCategories.length; i++) {
             var category = allCategories[i];
             var categoryCode = category.code;
-            categoryCheckboxList.push(addCheckbox(categoryContainer, categoryCode, categoryCode + " - " + category.name, displayCategory[categoryCode]));
+            categoryCheckboxList.push(addCheckbox(categoryContainer, categoryCode + " - " + category.name, categoryCode, options[categoryCode]));
         }
 
-        var source = document.getElementById("source");
-        var output = document.getElementById("output");
-
-        var fileSelector = document.getElementById("file-selector");
-
-        fileSelector.addEventListener("change", function () {
+        document.getElementById("file-selector").addEventListener("change", function () {
             var files = this.files;
             var totalFiles = files.length;
             if (totalFiles > 0) {
@@ -340,17 +332,13 @@
             }
         });
 
-        var formatButton = document.getElementById("format");
-
-        formatButton.addEventListener("click", function () {
-            output.value = lsmapToBBCode(source.value);
+        document.getElementById("format").addEventListener("click", function () {
+            output.value = formatText(source.value);
         });
 
-        var copyButton = document.getElementById("copy");
-
-        copyButton.addEventListener("click", function () {
-            output.select()
-            output.setSelectionRange(0, output.value.length);
+        document.getElementById("copy").addEventListener("click", function () {
+            output.select();
+            output.setSelectionRange(0, source.value.length);
             document.execCommand("copy");
         });
     });
