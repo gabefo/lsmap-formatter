@@ -5,40 +5,32 @@
     </head>
     <body>
         <div id="layout">
-            <div id="sidebar">
-                <h4>Options</h4>
-                <div class="controls" id="options">
-                    <label>
-                        <input id="show-category-icon" type="checkbox" checked>Show category icon
-                    </label>
-                    <label>
-                        <input id="show-category-code" type="checkbox" checked>Show category code
-                    </label>
-                    <label>
-                        <input id="show-category-name" type="checkbox">Show category name
-                    </label>
-                    <label>
-                        <input id="show-map-count" type="checkbox" checked>Show map count
-                    </label>
-                </div>
-                <h4>Displaying Categories</h4>
-                <div class="controls" id="categories"></div>
-            </div>
+            <div id="header">Lsmap Formatter</div>
             <div id="main">
-                <h1>Lsmap to BBCode Formatter</h1>
                 <div class="row">
                     <span>Paste your lsmap or</span>
                     <input id="file-selector" type="file" accept=".txt" multiple>
                     <label for="file-selector">Upload files</label>
                 </div>
-                <textarea id="source"></textarea>
+                <div id="panel">
+                    <textarea id="source" autofocus></textarea>
+                    <div class="separator"></div>
+                    <textarea id="output" readonly></textarea>
+                    <div id="copy" class="button-icon">
+                        <svg height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></svg>
+                        </svg>
+                    </div>
+                </div>
                 <div class="row">
                     <button id="format">Format</button>
                 </div>
-                <textarea id="output"></textarea>
-                <div class="row">
-                    <button id="copy">Copy</button>
-                </div>
+            </div>
+            <div id="sidebar">
+                <h4>Options</h4>
+                <div class="controls" id="options"></div>
+                <h4>Displaying Categories</h4>
+                <div class="controls" id="categories"></div>
             </div>
         </div>
     </body>
