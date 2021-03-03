@@ -12,24 +12,26 @@
                     <input id="file-selector" type="file" accept=".txt" multiple>
                     <label for="file-selector">Upload files</label>
                 </div>
-                <div id="panel">
-                    <textarea id="source" autofocus></textarea>
+                <div id="panels">
+                    <div class="panel">
+                        <div class="textarea-container">
+                            <textarea id="source" autofocus></textarea>
+                        </div>
+                    </div>
                     <div class="separator"></div>
-                    <textarea id="output" readonly></textarea>
-                    <div id="copy" class="button-icon">
-                        <svg height="24" viewBox="0 0 24 24" width="24">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></svg>
-                        </svg>
+                    <div id="results" class="panel scroller">
+                        <span class="panel-title">Result</span>
                     </div>
                 </div>
                 <div class="row">
                     <button id="format">Format</button>
+                    <span id="credits">Created by Billysmille</span>
                 </div>
             </div>
             <div id="sidebar">
                 <h4>Options</h4>
                 <div class="controls" id="options"></div>
-                <h4>Displaying Categories</h4>
+                <h4>Categories</h4>
                 <div class="controls" id="categories"></div>
             </div>
         </div>
