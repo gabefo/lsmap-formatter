@@ -6,7 +6,7 @@
     const MAX_TABS = +searchParams.get("t") || (mod ? 7 : 9999);
     const MAX_COLS = +searchParams.get("c") || 5;
 
-    const regex = /(\w+)(#\d{4})? - @(\d+) - \d+ - \d+% - (P\d{1,2})/;
+    const regex = /(\w+)(#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
     const categories = [{
         id: "P0",
         name: "Normal",
@@ -71,7 +71,7 @@
         id: "P13",
         name: "Bootcamp",
         color: "#A19A6C",
-        icon: "http://i.imgur.com/KQmIe6z.png"
+        icon: "https://i.imgur.com/cDoeahw.png"
     }, {
         id: "P17",
         name: "Racing",
@@ -96,7 +96,7 @@
         id: "P21",
         name: "Vampire Survivor Test",
         color: "#AC3736",
-        icon: "http://i.imgur.com/44zz3dC.png"
+        icon: "https://i.imgur.com/r7WCgrw.png"
     }, {
         id: "P22",
         name: "Tribe House",
@@ -111,7 +111,7 @@
         id: "P24",
         name: "Dual Shaman Survivor",
         color: "#7C7C7C",
-        icon: "http://img.atelier801.com/80a4f166.png"
+        icon: "https://i.imgur.com/FeAHBd8.png"
     }, {
         id: "P32",
         name: "Dual Shaman Test",
@@ -121,12 +121,12 @@
         id: "P34",
         name: "Dual Shaman Survivor Test",
         color: "#7C7C7C",
-        icon: "http://img.atelier801.com/80a4f166.png"
+        icon: "https://i.imgur.com/rSYEyN2.png"
     }, {
         id: "P38",
         name: "Racing Test",
         color: "#CA8A7F",
-        icon: "http://i.imgur.com/pUB90w0.png"
+        icon: "https://i.imgur.com/CUMTHXy.png"
     }, {
         id: "P41",
         name: "Module",
@@ -136,7 +136,7 @@
         id: "P42",
         name: "No Shaman Test",
         color: "#E9E9E9",
-        icon: "http://i.imgur.com/RV32jmm.png"
+        icon: "https://i.imgur.com/FNHA6zr.png"
     }, {
         id: "P43",
         name: "High Deleted",
@@ -151,12 +151,13 @@
         id: "P66",
         name: "Themed",
         color: "#009D9D",
-        icon: "https://i.imgur.com/MXiAziJ.png"
+        icon: "https://i.imgur.com/qDuwui5.png"
     }];
     const categoriesById = categories.reduce(function (obj, category) {
         obj[category.id] = category;
         return obj;
     }, {});
+    const rankingColors = ["#FFD700", "#FFFFFF", "#FF7F00"];
     const options = {
         showCategoryIcon: true,
         showCategoryCode: true,
@@ -192,6 +193,64 @@
         P43: true,
         P44: true,
         P66: true
+    };
+
+    const BBCode = {
+        text: function (text, options) {
+            for (const opt in options) {
+                if (BBCode.hasOwnProperty(opt) && typeof BBCode[opt] === "function") {
+                    text = BBCode[opt](text, options[opt]);
+                }
+            }
+            return text;
+        },
+        bold: function (text) {
+            return "[b]" + text + "[/b]";
+        },
+        italic: function (text) {
+            return "[i]" + text + "[/i]";
+        },
+        underlined: function (text) {
+            return "[u]" + text + "[/u]";
+        },
+        strikethrough: function (text) {
+            return "[s]" + text + "[/s]";
+        },
+        color: function (text, color) {
+            return "[color=" + color + "]" + text + "[/color]";
+        },
+        size: function (text, size) {
+            return "[size=" + size + "]" + text + "[/size]";
+        },
+        font: function (text, font) {
+            return "[font=" + font + "]" + text + "[/font]";
+        },
+        center: function (text) {
+            return "[p=center]" + text + "[/p]";
+        },
+        hr: function () {
+            return "[hr]";
+        },
+        tab: function (title, content) {
+            return "[#" + title + "]" + content + "[/#" + title + "]"; 
+        },
+        table: function () {},
+        image: function (url) {
+            return "[img]" + url + "[/img]";
+        },
+        video: function (url) {
+            return "[video]" + url + "[/video]";
+        },
+        link: function (url) {
+            return "[url=" + url + "][/url]";
+        },
+        list: function () {},
+        quote: function (content) {
+            return "[quote=]" + content + "[/quote]";
+        },
+        spoiler: function (label, text) {
+            return "[spoiler=" + label + "]" + text + "[/color]";
+        }
     };
 
     function readFile(file) {
@@ -351,13 +410,20 @@
                             bbcode += "\n[p=center][img]" + category.icon + "[/img] [color=" + category.color + "][b]" + category.name + "[/b][/color][/p][table align=center][row][cel][spoiler=Ranking]";
 
                             for (let j = 0; j < 9; j++) {
-                                bbcode += "\n#" + (j + 1) + " " + (ranking[j] ? ranking[j].author + " (" + ranking[j].totalMaps + ")" : "-");
+                                let place = (j + 1) + "\u00BA - ";
+                                if (j < 3) {
+                                    place = BBCode.bold(place);
+                                }
+                                if (rankingColors[j]) {
+                                    place = BBCode.color(place, rankingColors[j]);
+                                }
+                                bbcode += "\n" + place + (ranking[j] ? ranking[j].author + " (" + ranking[j].totalMaps + ")" : "");
                             }
 
                             bbcode += "[/spoiler][/cel][cel][spoiler=Mapas]" + [].concat(...Object.values(maps[categoryId] || [])).sort(function (a, b) {
-                                return a.code - b.code;
+                                return a.code.slice(1) - b.code.slice(1);
                             }).reduce(function (result, map) {
-                                return result += "\n@" + map.code + " - " + map.author;
+                                return result += "\n" + map.code + " - " + map.author;
                             }, "") + "[/spoiler][/cel][/row][/table]";
                         }
                     }
@@ -418,7 +484,7 @@
                         }
 
                         bbcode += "[/b][/color]]" + maps[categoryId][author].reduce(function (result, map) {
-                            return result += "\n@" + map.code;
+                            return result += "\n" + map.code;
                         }, "") + "[/spoiler][/cel]";
 
                         cols++;
