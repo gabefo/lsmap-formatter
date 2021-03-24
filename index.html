@@ -2,7 +2,7 @@
     <head>
         <title>Lsmap Formatter</title>
         <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script>
+        <script src="index.js"></script>
     </head>
     <body>
         <div id="layout">
@@ -10,8 +10,8 @@
             <div id="main">
                 <div class="row">
                     <span>Paste your lsmap or</span>
-                    <input id="file-selector" type="file" accept=".txt" multiple>
-                    <label for="file-selector">Upload files</label>
+                    <input id="file-selector" type="file" accept=".txt">
+                    <label for="file-selector">Upload file</label>
                 </div>
                 <div id="panels">
                     <div class="panel">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="separator"></div>
-                    <div id="results" class="panel scroller">
+                    <div id="results" class="panel">
                         <span class="panel-title">Result</span>
                     </div>
                 </div>
