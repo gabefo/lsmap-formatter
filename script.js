@@ -1,163 +1,153 @@
 (function () {
     "use-strict";
 
-    const searchParams = new URL(document.location).searchParams;
-    const mod = searchParams.get("mod") === "1";
-    const MAX_TABS = +searchParams.get("t") || (mod ? 7 : 9999);
-    const MAX_COLS = +searchParams.get("c") || 5;
-
     const regex = /(\w+)(#\d{4})? - (@\d+) - \d+ - \d+% - (P\d{1,2})/;
     const categories = [{
-        id: "P0",
+        category: "P0",
         name: "Normal",
         color: "#ACA99F",
         icon: "http://i.imgur.com/AjcGgyx.png"
     }, {
-        id: "P1",
+        category: "P1",
         name: "Protected",
         color: "#FCD46E",
         icon: "http://i.imgur.com/dnuppaW.png"
     }, {
-        id: "P2",
+        category: "P2",
         name: "Prime",
         color: "#E9BA5C",
         icon: "http://i.imgur.com/0xHDJfs.png"
     }, {
-        id: "P3",
-        name: "Bootcamp",
+        category: "P3",
+        name: "Prime Bootcamp",
         color: "#A19A6C",
         icon: "http://i.imgur.com/KQmIe6z.png"
     }, {
-        id: "P4",
+        category: "P4",
         name: "Shaman",
         color: "#95D9D6",
         icon: "http://i.imgur.com/W2DuMvz.png"
     }, {
-        id: "P5",
+        category: "P5",
         name: "Art",
         color: "#D16C41",
         icon: "http://i.imgur.com/JefkO6b.png"
     }, {
-        id: "P6",
+        category: "P6",
         name: "Mechanism",
         color: "#DBDBDB",
         icon: "http://i.imgur.com/EyQAQ10.png"
     }, {
-        id: "P7",
+        category: "P7",
         name: "No Shaman",
         color: "#E9E9E9",
         icon: "http://i.imgur.com/RV32jmm.png"
     }, {
-        id: "P8",
+        category: "P8",
         name: "Dual Shaman",
         color: "#C9C0E4",
         icon: "http://i.imgur.com/DoACCNh.png"
     }, {
-        id: "P9",
+        category: "P9",
         name: "Miscellaneous",
         color: "#E9BA5C",
         icon: "http://i.imgur.com/PYRguTf.png"
     }, {
-        id: "P10",
+        category: "P10",
         name: "Survivor",
         color: "#7C7C7C",
         icon: "http://i.imgur.com/UytFMU1.png"
     }, {
-        id: "P11",
+        category: "P11",
         name: "Vampire Survivor",
         color: "#AC3736",
         icon: "http://i.imgur.com/44zz3dC.png"
     }, {
-        id: "P13",
-        name: "Bootcamp",
+        category: "P13",
+        name: "Normal Bootcamp",
         color: "#A19A6C",
         icon: "https://i.imgur.com/cDoeahw.png"
     }, {
-        id: "P17",
+        category: "P17",
         name: "Racing",
         color: "#CA8A7F",
         icon: "http://i.imgur.com/ouplMc9.png"
     }, {
-        id: "P18",
+        category: "P18",
         name: "Defilante",
         color: "#84D329",
         icon: "http://i.imgur.com/8bEFPBE.png"
     }, {
-        id: "P19",
+        category: "P19",
         name: "Music",
         color: "#9FAAB2",
         icon: "http://img.atelier801.com/8124f166.png"
     }, {
-        id: "P20",
+        category: "P20",
         name: "Survivor Test",
         color: "#7C7C7C",
-        icon: "http://i.imgur.com/UytFMU1.png"
+        icon: "https://i.imgur.com/Jn9kasE.png"
     }, {
-        id: "P21",
+        category: "P21",
         name: "Vampire Survivor Test",
         color: "#AC3736",
         icon: "https://i.imgur.com/r7WCgrw.png"
     }, {
-        id: "P22",
+        category: "P22",
         name: "Tribe House",
         color: "#937456",
         icon: "http://i.imgur.com/Lxvjj1M.png"
     }, {
-        id: "P23",
+        category: "P23",
         name: "Bootcamp Test",
         color: "#A19A6C",
-        icon: "http://i.imgur.com/KQmIe6z.png"
+        icon: "https://i.imgur.com/XbWF6Vl.png"
     }, {
-        id: "P24",
+        category: "P24",
         name: "Dual Shaman Survivor",
         color: "#7C7C7C",
         icon: "https://i.imgur.com/FeAHBd8.png"
     }, {
-        id: "P32",
+        category: "P32",
         name: "Dual Shaman Test",
         color: "#C9C0E4",
         icon: "http://i.imgur.com/DoACCNh.png"
     }, {
-        id: "P34",
+        category: "P34",
         name: "Dual Shaman Survivor Test",
         color: "#7C7C7C",
         icon: "https://i.imgur.com/rSYEyN2.png"
     }, {
-        id: "P38",
+        category: "P38",
         name: "Racing Test",
         color: "#CA8A7F",
-        icon: "https://i.imgur.com/CUMTHXy.png"
+        icon: "http://i.imgur.com/ouplMc9.png"
     }, {
-        id: "P41",
+        category: "P41",
         name: "Module",
         color: "#009D9D",
-        icon: "http://i.imgur.com/GmbpOc6.png"
+        icon: "https://i.imgur.com/t7Q9764.png"
     }, {
-        id: "P42",
+        category: "P42",
         name: "No Shaman Test",
         color: "#E9E9E9",
-        icon: "https://i.imgur.com/FNHA6zr.png"
+        icon: "https://i.imgur.com/pEDfChK.png"
     }, {
-        id: "P43",
+        category: "P43",
         name: "High Deleted",
         color: "#FA6A40",
         icon: "http://i.imgur.com/BLabBxr.png"
     }, {
-        id: "P44",
+        category: "P44",
         name: "Deleted",
         color: "#FA6A40",
         icon: "http://i.imgur.com/BLabBxr.png"
     }, {
-        id: "P66",
-        name: "Themed",
+        category: "P66",
+        name: "Thematic",
         color: "#009D9D",
         icon: "https://i.imgur.com/qDuwui5.png"
     }];
-    const categoriesById = categories.reduce(function (obj, category) {
-        obj[category.id] = category;
-        return obj;
-    }, {});
-    const rankingColors = ["#FFD700", "#FFFFFF", "#FF7F00"];
     const options = {
         showCategoryIcon: true,
         showCategoryCode: true,
@@ -195,64 +185,6 @@
         P66: true
     };
 
-    const BBCode = {
-        text: function (text, options) {
-            for (const opt in options) {
-                if (BBCode.hasOwnProperty(opt) && typeof BBCode[opt] === "function") {
-                    text = BBCode[opt](text, options[opt]);
-                }
-            }
-            return text;
-        },
-        bold: function (text) {
-            return "[b]" + text + "[/b]";
-        },
-        italic: function (text) {
-            return "[i]" + text + "[/i]";
-        },
-        underlined: function (text) {
-            return "[u]" + text + "[/u]";
-        },
-        strikethrough: function (text) {
-            return "[s]" + text + "[/s]";
-        },
-        color: function (text, color) {
-            return "[color=" + color + "]" + text + "[/color]";
-        },
-        size: function (text, size) {
-            return "[size=" + size + "]" + text + "[/size]";
-        },
-        font: function (text, font) {
-            return "[font=" + font + "]" + text + "[/font]";
-        },
-        center: function (text) {
-            return "[p=center]" + text + "[/p]";
-        },
-        hr: function () {
-            return "[hr]";
-        },
-        tab: function (title, content) {
-            return "[#" + title + "]" + content + "[/#" + title + "]"; 
-        },
-        table: function () {},
-        image: function (url) {
-            return "[img]" + url + "[/img]";
-        },
-        video: function (url) {
-            return "[video]" + url + "[/video]";
-        },
-        link: function (url) {
-            return "[url=" + url + "][/url]";
-        },
-        list: function () {},
-        quote: function (content) {
-            return "[quote=]" + content + "[/quote]";
-        },
-        spoiler: function (label, text) {
-            return "[spoiler=" + label + "]" + text + "[/color]";
-        }
-    };
-
     function readFile(file) {
         return new Promise(function (resolve, reject) {
             const reader = new FileReader();
@@ -267,17 +199,40 @@
     }
 
     function readLine(text, callback) {
-        const length = text.length;
+        const regex = /\r\n|\n|\r/g;
+        let lineIndex = 0;
         let start = 0;
-        let end;
-        while (start < length) {
-            end = text.indexOf("\n", start);
-            if (end === -1) {
-                end = length;
-            }
-            callback(text.slice(start, end));
-            start = end + 1;
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+            callback(text.slice(start, match.index), lineIndex);
+            start = regex.lastIndex;
+            lineIndex++;
         }
+        callback(text.slice(start), lineIndex);
+    }
+
+    function removeChildren(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.lastChild);
+        }
+    }
+
+    function addTextArea(parent, value) {
+        const container = document.createElement("div");
+        container.classList.add("textarea-container", "has-copy-button");
+        const textarea = document.createElement("textarea");
+        textarea.readOnly = true;
+        textarea.value = value;
+        container.appendChild(textarea);
+        const copyButton = document.createElement("div");
+        copyButton.classList.add("button-icon", "copy-button");
+        copyButton.addEventListener("click", function () {
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+            document.execCommand("copy");
+        });
+        container.appendChild(copyButton);
+        parent.appendChild(container);
     }
 
     function addCheckbox(parent, labelText, value) {
@@ -302,24 +257,6 @@
         const source = document.getElementById("source");
         const results = document.getElementById("results");
 
-        function addTextArea(value) {
-            const container = document.createElement("div");
-            container.classList.add("textarea-container", "has-copy-button");
-            const textarea = document.createElement("textarea");
-            textarea.readOnly = true;
-            textarea.value = value;
-            container.appendChild(textarea);
-            const copyButton = document.createElement("div");
-            copyButton.classList.add("button-icon", "copy-button");
-            copyButton.addEventListener("click", function () {
-                textarea.select();
-                textarea.setSelectionRange(0, textarea.value.length);
-                document.execCommand("copy");
-            });
-            container.appendChild(copyButton);
-            results.appendChild(container);
-        }
-
         const optionsContainer = document.getElementById("options");
 
         addCheckbox(optionsContainer, "Show category Icon", "showCategoryIcon");
@@ -339,30 +276,21 @@
         });
 
         for (let i = 0; i < categories.length; i++) {
-            const category = categories[i];
-            const categoryId = category.id;
-            categoryCheckboxList.push(addCheckbox(categoryContainer, categoryId + " - " + category.name, categoryId));
+            const categoryInfo = categories[i];
+            const category = categoryInfo.category;
+            categoryCheckboxList.push(addCheckbox(categoryContainer, category + " - " + categoryInfo.name, category));
         }
 
         document.getElementById("file-selector").addEventListener("change", function () {
-            const files = this.files;
-            const totalFiles = files.length;
-            if (totalFiles > 0) {
-                const promises = [];
-                for (let i = 0; i < totalFiles; i++) {
-                    promises.push(readFile(files[i]));
-                }
-                Promise.all(promises).then(function (values) {
-                    source.value = values.join("\n");
-                });
-            }
+            readFile(this.files[0]).then(function (value) {
+                source.value = value;
+            });
         });
 
         document.getElementById("format").addEventListener("click", function () {
-            results.innerHTML = "";
+            removeChildren(results);
 
-            const maps = {};
-            const authors = new Set();
+            const mapsByCategory = {};
 
             readLine(source.value, function (line) {
                 const match = regex.exec(line);
@@ -370,138 +298,75 @@
                     return;
                 }
 
-                const author = match[1] + (match[2] || "#0000");
+                const owner = match[1] + (match[2] || "#0000");
                 const code = match[3];
                 const category = match[4];
 
-                if (!maps[category]) {
-                    maps[category] = {};
+                if (!mapsByCategory[category]) {
+                    mapsByCategory[category] = [];
                 }
 
-                if (!maps[category][author]) {
-                    maps[category][author] = [];
-                }
-
-                maps[category][author].push({ code, author, category });
-
-                authors.add(author);
+                mapsByCategory[category].push({ owner, code, category });
             });
 
-            let bbcode;
+            let bbcode = "[table align=center][row]";
 
-            if (mod) {
-                [["P1", "P2", "P3", "P4", "P5"], ["P6", "P7", "P8", "P9", "P10"], ["P11", "P13", "P17", "P18", "P24"]].forEach(function (categorySet) {
-                    bbcode = "[p=center][size=30][color=#EDCC8D]CATEGORIAS[/color][/size]\n\nLista de mapas das categorias " + categorySet.join(", ") + "[/p]";
+            for (let i = 0, cols = 0; i < categories.length; i++) {
+                const categoryInfo = categories[i];
+                const category = categoryInfo.category;
 
-                    for (let i = 0; i < categorySet.length; i++) {
-                        const category = categoriesById[categorySet[i]];
-                        const categoryId = category.id;
-
-                        if (options[categoryId]) {
-                            const ranking = Object.entries(maps[categoryId] || []).map(function (value) {
-                                return {
-                                    author: value[0],
-                                    totalMaps: value[1].length
-                                };
-                            }).sort(function (a, b) {
-                                return b.totalMaps - a.totalMaps;
-                            });
-
-                            bbcode += "\n[p=center][img]" + category.icon + "[/img] [color=" + category.color + "][b]" + category.name + "[/b][/color][/p][table align=center][row][cel][spoiler=Ranking]";
-
-                            for (let j = 0; j < 9; j++) {
-                                let place = (j + 1) + "\u00BA - ";
-                                if (j < 3) {
-                                    place = BBCode.bold(place);
-                                }
-                                if (rankingColors[j]) {
-                                    place = BBCode.color(place, rankingColors[j]);
-                                }
-                                bbcode += "\n" + place + (ranking[j] ? ranking[j].author + " (" + ranking[j].totalMaps + ")" : "");
-                            }
-
-                            bbcode += "[/spoiler][/cel][cel][spoiler=Mapas]" + [].concat(...Object.values(maps[categoryId] || [])).sort(function (a, b) {
-                                return a.code.slice(1) - b.code.slice(1);
-                            }).reduce(function (result, map) {
-                                return result += "\n" + map.code + " - " + map.author;
-                            }, "") + "[/spoiler][/cel][/row][/table]";
-                        }
+                if (options[category] && mapsByCategory[category]) {
+                    if (cols === 5) {
+                        bbcode += "[/row][row]";
+                        cols = 0;
                     }
 
-                    addTextArea(bbcode);
-                });
-            }
+                    cols++;
 
-            bbcode = "";
+                    bbcode += "[cel][spoiler";
 
-            let n = 0;
+                    let text = "";
 
-            for (const author of authors) {
-                bbcode += "[#" + author + "]";
-
-                if (mod) {
-                    bbcode += "[p=center][size=30][color=#EDCC8D]MAPEIROS - " + author + "[/color][/size][/p]\n";
-                }
-
-                bbcode += "[table align=center][row]";
-
-                for (let i = 0, cols = 0; i < categories.length; i++) {
-                    const category = categories[i];
-                    const categoryId = category.id;
-
-                    if (options[categoryId] && maps[categoryId] && maps[categoryId][author]) {
-                        if (cols === MAX_COLS) {
-                            bbcode += "[/row][row]";
-                            cols = 0;
-                        }
-
-                        bbcode += "[cel][spoiler=";
-
-                        let separator = "";
-
-                        if (options.showCategoryIcon) {
-                            bbcode += "[img]" + category.icon + "[/img]";
-                            separator = " ";
-                        }
-
-                        bbcode += "[color=" + category.color + "][b]";
-
-                        if (options.showCategoryCode) {
-                            bbcode += separator + categoryId;
-                            separator = " - ";
-                        }
-
-                        if (options.showCategoryName) {
-                            bbcode += separator + category.name;
-                        }
-
-                        if (separator !== "") {
-                            separator = " ";
-                        }
-
-                        if (options.showMapCount) {
-                            bbcode += separator + "(" + maps[categoryId][author].length + ")";
-                        }
-
-                        bbcode += "[/b][/color]]" + maps[categoryId][author].reduce(function (result, map) {
-                            return result += "\n" + map.code;
-                        }, "") + "[/spoiler][/cel]";
-
-                        cols++;
+                    if (options.showCategoryCode) {
+                        text += category;
                     }
-                }
-                
-                bbcode += "[/row][row][cel colspan=" + MAX_COLS + "][p=right][size=12]Feito com [url=https://gabefo.github.io/lsmap2bbcode/]Lsmap Formatter[/url][/size][/p][/cel][/row][/table][/#" + author + "]";
 
-                if (++n % MAX_TABS === 0) {
-                    addTextArea(bbcode);
-                    bbcode = "";
+                    if (options.showCategoryName) {
+                        if (text) {
+                            text += " - ";
+                        }
+                        text += categoryInfo.name;
+                    }
+
+                    if (options.showMapCount) {
+                        if (text) {
+                            text += " ";
+                        }
+                        text += "(" + mapsByCategory[category].length + ")";
+                    }
+
+                    if (text) {
+                        text = "[color=" + categoryInfo.color + "][b]" + text + "[/b][/color]";
+                    }
+
+                    if (options.showCategoryIcon) {
+                        const img = "[img]" + categoryInfo.icon + "[/img]";
+                        text = text ? img + " " + text : img;
+                    }
+                    
+                    if (text) {
+                        bbcode += "=" + text;
+                    }
+
+                    bbcode += "]" + mapsByCategory[category].reduce(function (result, map) {
+                        return result += "\n" + map.code;
+                    }, "") + "[/spoiler][/cel]";
                 }
             }
-
-            if (bbcode !== "") {
-                addTextArea(bbcode);
-            }
+            
+            bbcode += "[/row][row][cel colspan=5][p=right][size=12]Feito com [url=https://gabefo.github.io/lsmap2bbcode/]Lsmap Formatter[/url][/size][/p][/cel][/row][/table]";
+            
+            addTextArea(results, bbcode);
         });
     });
 })();
