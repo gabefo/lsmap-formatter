@@ -6,16 +6,6 @@ body {
     color: #5f6368;
 }
 
-.scroller {
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-}
-
-.scroller > div {
-    scroll-snap-align: start;
-    scroll-margin: 0;
-}
-
 h4 {
     font-size: 16px;
     font-weight: 500;
@@ -77,10 +67,6 @@ textarea {
     border: none;
     outline: none;
     resize: none;
-}
-
-textarea[readonly] {
-    overflow: hidden;
 }
 
 textarea::-webkit-scrollbar {
